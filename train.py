@@ -2,20 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 from collections import defaultdict
-
-# Parameters
-total_floors = 5
-floor_height = 6  # in meters
-elevator_speed = 3  # m/s
-elevator_capacity = 4
-stop_time = 2  # seconds
-time_step = stop_time / 10  # for Euler integration
-learning_rate = 0.38
-discount_rate = 0.99
-epsilon = 0.8
-epsilon_decay = 0.89
-tau = 11.8
-tau_decay = 0.998
+from config import (
+    total_floors,
+    floor_height,
+    elevator_speed,
+    elevator_capacity,
+    stop_time,
+    time_step,
+    learning_rate,
+    discount_rate,
+    epsilon,
+    epsilon_decay,
+    tau,
+    tau_decay
+)
 
 # Reward function
 def reward_function(call_flags, occupancy):
@@ -105,10 +105,12 @@ def q_learning(trials=50, trial_length=500):
     return q_table, trial_waiting_times
 
 # Value Iteration Algorithm
-def value_iteration(convergence_threshold=0.01):
+def value_iteration(convergence_threshold=0.01, trials=50, trial_length=500):
     value_table = defaultdict(lambda: 0)
     policy = {}
+    trial_waiting_times_vi = []
 
+    # Compute value table and policy
     while True:
         delta = 0
         for state in [(tuple([0, 0, 0, 0]), pos, occ) for pos in range(total_floors) for occ in range(elevator_capacity + 1)]:
@@ -129,21 +131,45 @@ def value_iteration(convergence_threshold=0.01):
         if delta < convergence_threshold:
             break
     
-    return policy, value_table
+    # Simulate using the computed policy to track trial waiting times
+    for trial in range(trials):
+        state = (0, 0, 0, 0, 0, 0)  # Initial state: call flags, position, occupancy
+        total_waiting_time = 0
+        
+        for t in range(trial_length):
+            state_tuple = state
+            action = policy.get(state_tuple, 0)  # Default to "stop" if no policy exists
+            next_s = next_state(state, action)
+            reward = reward_function(next_s[:4], next_s[5])
+            state = next_s
+            total_waiting_time += abs(reward)
 
-# Plot Graphs
-def plot_graphs(trial_waiting_times_q, avg_waiting_qvi, avg_waiting_q):
-    plt.figure(figsize=(12, 6))
+        trial_waiting_times_vi.append(total_waiting_time / trial_length)
+
+    return policy, value_table, trial_waiting_times_vi
+
+# Updated Plot Graphs Function
+def plot_graphs(trial_waiting_times_q, trial_waiting_times_vi, avg_waiting_qvi, avg_waiting_q):
+    plt.figure(figsize=(15, 8))
 
     # Evolution of Trial Waiting Time for Q-Learning
-    plt.subplot(1, 2, 1)
-    plt.plot(range(len(trial_waiting_times_q)), trial_waiting_times_q)
-    plt.title("Evolution of Trial Waiting Time with Q-Learning")
+    plt.subplot(2, 2, 1)
+    plt.plot(range(len(trial_waiting_times_q)), trial_waiting_times_q, label="Q-Learning")
+    plt.title("Evolution of Trial Waiting Time (Q-Learning)")
     plt.xlabel("Trial Number")
     plt.ylabel("Trial Waiting Time [s]")
+    plt.legend()
+
+    # Evolution of Trial Waiting Time for Q-Value Iteration
+    plt.subplot(2, 2, 2)
+    plt.plot(range(len(trial_waiting_times_vi)), trial_waiting_times_vi, label="Q-Value Iteration", color="orange")
+    plt.title("Evolution of Trial Waiting Time (Q-Value Iteration)")
+    plt.xlabel("Trial Number")
+    plt.ylabel("Trial Waiting Time [s]")
+    plt.legend()
 
     # Comparison of QVI and Q-Learning
-    plt.subplot(1, 2, 2)
+    plt.subplot(2, 1, 2)
     plt.plot(avg_waiting_qvi, label="Q-Value Iteration")
     plt.plot(avg_waiting_q, label="Q-Learning")
     plt.title("Average Waiting Time Comparison")
@@ -159,11 +185,11 @@ if __name__ == "__main__":
     q_table, trial_waiting_times_q = q_learning()
     
     # Run Value Iteration
-    policy, value_table = value_iteration()
+    policy, value_table, trial_waiting_times_vi = value_iteration()
 
     # Generate dummy comparison data for average waiting times
     avg_waiting_qvi = [5 + np.random.rand() for _ in range(500)]  # Simulated QVI data
     avg_waiting_q = [6 + np.random.rand() for _ in range(500)]   # Simulated Q-learning data
 
     # Plot Results
-    plot_graphs(trial_waiting_times_q, avg_waiting_qvi, avg_waiting_q)
+    plot_graphs(trial_waiting_times_q, trial_waiting_times_vi, avg_waiting_qvi, avg_waiting_q)

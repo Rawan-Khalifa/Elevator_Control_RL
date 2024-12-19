@@ -17,8 +17,7 @@ The simulation visualizes the learned control policy in a **Graphical User Inter
    - Real-time display of elevator position, flagged floors, passenger counts, and simulation time.
 - **Performance Plots**:
    - Plots showing the evolution of waiting times over trials.
-   - Comparison between Q-Learning and Value Iteration policies.
-     
+   - Comparison between Q-Learning and Value Iteration policies.    
 ---
 
 ## Prerequisites ⚙️
@@ -48,8 +47,8 @@ python train.py
 ```
 
 This will output:
-1. **Training logs** showing the evolution of states, actions, and rewards.
-2. **Performance Metrics** such as trial waiting times.
+1. **Training logs** showing the evolution of states, actions, and rewards (for Q_learning).
+2. **Performance Metrics** including trial waiting times and average waiting time.
 
 ---
 
@@ -66,20 +65,35 @@ This will:
 
 ---
 
+## Performance Metrics Visualizations
+
+![Evolution of Trial Waiting Time (Q-Learning)](/Users/rwankhalifa/Documents/RL_Elevator/assests/qlearn.png)
+
+![Evolution of Trial Waiting Time (Q-Value Iteration)](/Users/rwankhalifa/Documents/RL_Elevator/assests/qvalue.png)
+
+![Average Wait Time Comparison](/Users/rwankhalifa/Documents/RL_Elevator/assests/avg_time.png)
+
+
 ## GUI Features 🖥️
 
-- **Left Panel**:
+- **Top Panel**:
    - Simulation time.
    - Current elevator action (Up, Down, Stop).
 - **Central Visualization**:
    - Floors with:
      - **Black rectangle**: Current elevator position.
      - **Flags**: Call requests for each floor.
-     - **Passenger counts**: Number of waiting passengers and accumulated wait times.
-- **Right Panel**:
+     - **Passenger counts**: Number of waiting passengers.
+- **Bottom Panel**:
    - Number of passengers in the elevator.
    - Average waiting time updated in real time.
 
+**Simulation Results Examples**
+
+![Sim_1](/Users/rwankhalifa/Documents/RL_Elevator/assests/Sim_1.png)
+![Sim_2](/Users/rwankhalifa/Documents/RL_Elevator/assests/Sim_2.png)
+![Sim_3](/Users/rwankhalifa/Documents/RL_Elevator/assests/Sim_3.png)
+![Sim_4](/Users/rwankhalifa/Documents/RL_Elevator/assests/Sim_4.png)
 ---
 
 ## Customization ✏️

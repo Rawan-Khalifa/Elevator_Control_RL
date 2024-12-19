@@ -56,7 +56,7 @@ This will output:
 Use the trained Q-table to simulate and visualize the elevator system:
 
 ```bash
-python GUI_2.py
+python GUI.py
 ```
 
 This will:

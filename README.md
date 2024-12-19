@@ -67,11 +67,11 @@ This will:
 
 ## Performance Metrics Visualizations
 
-![Evolution of Trial Waiting Time (Q-Learning)](/Users/rwankhalifa/Documents/RL_Elevator/assests/qlearn.png)
+![Evolution of Trial Waiting Time (Q-Learning)](/assests/qlearn.png)
 
-![Evolution of Trial Waiting Time (Q-Value Iteration)](/Users/rwankhalifa/Documents/RL_Elevator/assests/qvalue.png)
+![Evolution of Trial Waiting Time (Q-Value Iteration)](/assests/qvalue.png)
 
-![Average Wait Time Comparison](/Users/rwankhalifa/Documents/RL_Elevator/assests/avg_time.png)
+![Average Wait Time Comparison](/assests/avg_time.png)
 
 
 ## GUI Features 🖥️
@@ -90,10 +90,10 @@ This will:
 
 **Simulation Results Examples**
 
-![Sim_1](/Users/rwankhalifa/Documents/RL_Elevator/assests/Sim_1.png)
-![Sim_2](/Users/rwankhalifa/Documents/RL_Elevator/assests/Sim_2.png)
-![Sim_3](/Users/rwankhalifa/Documents/RL_Elevator/assests/Sim_3.png)
-![Sim_4](/Users/rwankhalifa/Documents/RL_Elevator/assests/Sim_4.png)
+![Sim_1](/assests/Sim_1.png)
+![Sim_2](/assests/Sim_2.png)
+![Sim_3](/assests/Sim_3.png)
+![Sim_4](/assests/Sim_4.png)
 ---
 
 ## Customization ✏️
